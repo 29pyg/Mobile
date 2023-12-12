@@ -64,24 +64,18 @@ public class MainActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(
                 Request.Method.GET,
                 url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        processResponse(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // 에러 처리, 로그 출력 등을 원하는대로 수행
-                        Log.e("MainActivity", "에러 발생: " + error.getMessage());
+                response -> processResponse(response), // 응답 시의 동작 || actions when response
+                error -> {
+                    // 적절한 에러처리(정답은 따로 없음, 로그출력용) || error handling, freely make it!
+                    if (error != null) {
+                        println("Error: " + error.getMessage());
                     }
                 }
         ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                // 필요한 경우 파라미터를 설정
-                Map<String, String> params = new HashMap<>();
+                Map<String,String> params = new HashMap<String,String>();
+
                 return params;
             }
         };
@@ -90,20 +84,18 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(request);
         println("요청 보냄.");
     }
-
     public void println(String data) {
         Log.d("MainActivity", data);
     }
-
     public void processResponse(String response) {
-        Gson gson = new Gson();
-        // 응답받은 JSON 문자열을 특정 타입의 클래스로 변환
-        MovieList movieList = gson.fromJson(response, MovieList.class);
+        Gson gson = new Gson(); // 변수 선언 || variable declaration
+        MovieList movieList = gson.fromJson(response, MovieList.class); // 응답받은 JSON 문자열을 특정 타입의 클래스로 변환 || transforming specific class type from received JSON String
 
         println("영화정보의 수 : " + movieList.boxOfficeResult.dailyBoxOfficeList.size());
 
         for (int i = 0; i < movieList.boxOfficeResult.dailyBoxOfficeList.size(); i++) {
             Movie movie = movieList.boxOfficeResult.dailyBoxOfficeList.get(i);
+
             adapter.addItem(movie);
         }
 

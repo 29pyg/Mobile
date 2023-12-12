@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=072b596b4a06cbb74e5f13a6bcdba521&amp;targetDt=20120101" />
+        android:text="http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=072b596b4a06cbb74e5f13a6bcdba521&amp;targetDt=20231211" />
 
     <Button
         android:id="@+id/button"
